@@ -1,32 +1,52 @@
 # HARNESS.md — local agent index
 
 Entry point for AI agents (e.g. Claude Code) working in **this local clone**. Indexes the
-machine-specific docs and states the environment constraints. Not curriculum content; kept
-out of git via `.git/info/exclude`. Read before running code or debugging "command not
-found" / wrong-version issues.
+docs, states the environment constraints, and defines how the tutor agent runs lessons.
+Read before running code or debugging "command not found" / wrong-version issues.
+
+The repo is a **fork** (origin = `github.com/popemkt/ai-engineering-from-scratch`,
+upstream = `github.com/rohitg00/ai-engineering-from-scratch`). The setup files below are
+**committed to the fork** (portable across machines); pull curriculum updates with
+`git fetch upstream && git rebase upstream/main`.
 
 Context: macOS (Apple M4), Determinate Nix + home-manager, direnv + nix-direnv.
 
-## Complete setup — every file (all in-repo, git-excluded)
+## Complete setup — every file
 
-| File | Tracked? | Purpose |
-|------|----------|---------|
-| `.nix/flake.nix` | excluded | Toolchain devShell: python312, uv, nodejs_22, pnpm, git. |
-| `.nix/flake.lock` | excluded | Pins nixpkgs. |
-| `.envrc` | excluded | direnv: `use flake "path:$PWD/.nix"` + `.venv/bin` on PATH. |
-| `.venv/` | excluded | uv-managed python libs (numpy, torch). Built by uv, not nix. |
-| `.direnv/` | excluded | nix-direnv cache. |
-| [LEARNING.md](LEARNING.md) | excluded | **Progress tracking** + per-lesson study loop. |
-| HARNESS.md | excluded | This index. |
-| `AGENTS.md` | tracked (curriculum) | Links here; marked `git update-index --skip-worktree` so the link never shows/commits. |
+| File | In git? | Purpose |
+|------|---------|---------|
+| `.nix/flake.nix` | committed | Toolchain devShell: python312, uv, nodejs_22, pnpm, git. |
+| `.nix/flake.lock` | committed | Pins nixpkgs. |
+| `.envrc` | committed | direnv: `use flake "path:$PWD/.nix"` + `.venv/bin` on PATH. |
+| `.venv/` | gitignored | uv-managed python libs (numpy, torch). Built per-machine. |
+| `.direnv/` | gitignored | nix-direnv cache. Built per-machine. |
+| [LEARNING.md](LEARNING.md) | committed | Study loop + auto-rendered progress table. |
+| `learn/progress.py` | committed | Progress tracker CLI (stdlib). |
+| `learn/progress.json` | committed | Completed-lessons data (source of truth). |
+| HARNESS.md | committed | This index. |
+| `AGENTS.md` | committed | Links here (curriculum file; rebase may touch it). |
 
-Exclusions live in `.git/info/exclude`. **Nothing in `~/.claude` is needed for the env** —
-the flake is in-repo via a `path:` flakeref (reads filesystem, no git-tracking needed; only
-`.nix/` is copied to the store, not the whole repo). The sole `~/.claude` thing is Claude's
-own **memory** at `~/.claude/projects/<repo>/memory/` — that's the memory system, not env setup.
+`.venv/` + `.direnv/` are in `.gitignore` (machine-specific, rebuilt). Claude's persistent
+**memory** lives at `~/.claude/projects/<repo>/memory/` — that's the memory system, not env
+setup, and does not travel with the fork.
 
-To reproduce from scratch: create `.nix/flake.nix` + `.envrc`, `direnv allow`, then
+To reproduce on a new machine: clone fork → `cd` in (direnv builds toolchain) →
 `direnv exec . uv pip install --python "$PWD/.venv/bin/python" numpy torch`.
+
+## Teaching protocol (for the tutor agent)
+
+The user is a seasoned dev — skip git/lang/tooling basics; lead with the non-obvious.
+
+- **Quizzes via the Ask tool.** When a lesson has `quiz.json`, present its questions using
+  the `AskUserQuestion` tool (one call, batch the questions), not as plain prose. Map each
+  quiz option to an answer choice; after the user answers, confirm correct/incorrect with
+  the lesson's `explanation`. This applies to any curriculum-provided questions.
+  **Shuffle the options — never always put the correct answer first.**
+- Keep the per-lesson loop from [LEARNING.md](LEARNING.md), but compress the parts the user
+  already knows. Lead with intuition + the one thing that's easy to get wrong.
+- **Track progress** with `learn/progress.py`: at lesson end run
+  `direnv exec . python3 learn/progress.py done <phase> <lesson> [--quiz X/Y] [--note ...]`
+  (auto-renders the table into LEARNING.md). `… next` shows what's up next.
 
 ---
 

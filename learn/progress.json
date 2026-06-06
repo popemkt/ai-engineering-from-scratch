@@ -1,0 +1,16 @@
+{
+  "completed": {
+    "00/01": {
+      "note": "env built + MPS verified",
+      "quiz": null,
+      "slug": "dev-environment",
+      "ts": "2026-06-06"
+    },
+    "00/02": {
+      "note": "lived it via fork setup",
+      "quiz": "3/3",
+      "slug": "git-and-collaboration",
+      "ts": "2026-06-06"
+    }
+  }
+}
