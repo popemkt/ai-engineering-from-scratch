@@ -4,6 +4,10 @@ Operating manual for contributors and AI agents touching this repo. Read it befo
 
 The repo is a curriculum, not a SaaS app. The lessons are the product. Every rule below keeps 435 lessons coherent over time.
 
+> **Local agents:** see [HARNESS.md](HARNESS.md) for this machine's environment constraints
+> (how to run code via `direnv exec`, nix flake + uv layout, PATH/harness gotchas).
+> It is a local, git-excluded file — not part of the curriculum.
+
 ---
 
 ## Philosophy

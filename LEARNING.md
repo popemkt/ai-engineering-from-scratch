@@ -1,0 +1,45 @@
+# Learning with Claude — my study companion
+
+> Personal file. Not part of the curriculum. Safe to `.gitignore` or delete.
+
+## How we run a lesson
+
+Each lesson follows this loop. I won't dump everything at once — gradual disclosure.
+
+1. **Why care** — the problem the lesson solves, concretely.
+2. **Intuition + visual** — diagram / table / worked example before any code.
+3. **Checkpoint** — I ask you a prediction or question. You answer, then we move on.
+4. **Build it** — code revealed step by step, each step explained, you confirm before the next.
+5. **Run it** — we run the code, read the output together.
+6. **Ship it** — the reusable artifact the lesson produces (prompt / skill / agent / MCP).
+7. **Quiz** — a few questions from the lesson's `quiz.json`.
+
+At the end of every lesson I ask: continue, go deeper, or branch.
+
+## Plan
+
+- Go through all 20 phases, top to bottom (math → DL → transformers → agents → production).
+- Skip only whole **branches** you don't want (e.g. Vision, Speech). Never skip a target's prerequisites.
+- ~503 lessons, ~320 hours total. No rush — pace is yours.
+
+## Ask me anytime
+
+- "go deeper" — more math / proofs / edge cases
+- "lighter" — less detail, faster
+- "skip to phase N" / "skip Vision"
+- "quiz me" — pull the lesson quiz
+- "where am I" — progress recap
+
+## Dev environment (done)
+
+- Toolchain via Nix flake at `~/.claude/envs/ai-eng-from-scratch/flake.nix` (outside repo → curriculum git stays clean).
+- `.envrc` (`use flake` + `.venv/bin`). **You**: `cd` in → direnv auto-loads (your `.zshrc` hook). Nothing to type.
+- Python libs via `uv` into `.venv` (numpy, torch). Verified: python 3.12.13, torch 2.12.0, **MPS working on M4**.
+- Claude runs code with `direnv exec .` (harness sandbox can't use the shell hook).
+
+## Progress
+
+| Phase | Lesson | Status |
+|-------|--------|--------|
+| 0 | 01 dev-environment | ✅ done — env built + MPS verified |
+| 0 | 02 git-and-collaboration | next |
