@@ -47,5 +47,7 @@ Run: `direnv exec . python3 learn/progress.py next | stats | done <p> <l> --quiz
 |---|---|---|---|---|
 | 00 | 01 dev-environment | ✅ done | - | env built + MPS verified |
 | 00 | 02 git-and-collaboration | ✅ done | 3/3 | lived it via fork setup |
-| 00 | 03 gpu-setup-and-cloud | ▶ next |  |  |
+| 00 | 03 gpu-setup-and-cloud | ✅ done | 2/3 | M4 MPS daily, DGX Spark for heavy; async/sync clarified |
+| 00 | 04 apis-and-keys | ✅ done | 2/3 | x-api-key vs Bearer gotcha; dotenv_if_exists wired |
+| 00 | 05 jupyter-notebooks | ▶ next |  |  |
 <!-- progress:end -->

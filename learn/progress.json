@@ -11,6 +11,18 @@
       "quiz": "3/3",
       "slug": "git-and-collaboration",
       "ts": "2026-06-06"
+    },
+    "00/03": {
+      "note": "M4 MPS daily, DGX Spark for heavy; async/sync clarified",
+      "quiz": "2/3",
+      "slug": "gpu-setup-and-cloud",
+      "ts": "2026-06-07"
+    },
+    "00/04": {
+      "note": "x-api-key vs Bearer gotcha; dotenv_if_exists wired",
+      "quiz": "2/3",
+      "slug": "apis-and-keys",
+      "ts": "2026-06-07"
     }
   }
 }
